@@ -1,0 +1,64 @@
+﻿<Window
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ChartTest"
+        xmlns:dxc="http://schemas.devexpress.com/winfx/2008/xaml/charts" x:Class="ChartTest.MainWindow"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="350" Width="580">
+    <Window.Resources>
+        <ResourceDictionary>
+            <XmlDataProvider x:Key="points" Source="Data/Profile.xml" XPath="Points"/>
+        </ResourceDictionary>
+    </Window.Resources>
+    <Grid>
+        <dxc:ChartControl>
+            <!-- Colors for the two series (Green, Orange)-->
+            <dxc:ChartControl.Palette>
+                <dxc:CustomPalette>
+                    <dxc:CustomPalette.Colors>
+                        <Color>#FF9BBB59</Color>
+                        <Color>#FFF75C5C</Color>
+                        <Color>#FFFFC000</Color>
+                    </dxc:CustomPalette.Colors>
+                </dxc:CustomPalette>
+            </dxc:ChartControl.Palette>
+            <!-- Crosshair Tooltip generic options( Colors for Lines and Labes on X and Y axis-->
+            <dxc:ChartControl.CrosshairOptions>
+                <dxc:CrosshairOptions ShowValueLine="True" ShowArgumentLabels="True" ShowValueLabels="True" ValueLineBrush="#FF9BBB59" ArgumentLineBrush="#FF9BBB59"/>
+            </dxc:ChartControl.CrosshairOptions>
+            
+            <!--DiagramXY-->
+            <dxc:XYDiagram2D Background="White">
+                <!--X Y Axis options-->
+                <dxc:XYDiagram2D.AxisY>
+                    <dxc:AxisY2D Visible="True">
+                        <dxc:AxisY2D.Title>
+                            <dxc:AxisTitle Content="Time Remaining (Hours)" />
+                        </dxc:AxisY2D.Title>
+                    </dxc:AxisY2D>
+                </dxc:XYDiagram2D.AxisY>
+                <dxc:XYDiagram2D.AxisX>
+                    <dxc:AxisX2D>
+                        <dxc:AxisX2D.Title>
+                            <dxc:AxisTitle Content="Temperature (°C)" />
+                        </dxc:AxisX2D.Title>
+                    </dxc:AxisX2D>
+                </dxc:XYDiagram2D.AxisX>
+                <!--2 series- Bar and Spline - both binding data from Profile.xml--> 
+                <dxc:XYDiagram2D.Series>
+                    <dxc:BarSideBySideSeries2D DataSource="{Binding Source={StaticResource points}, XPath=Point}" ArgumentDataMember="Temperature" ValueDataMember="Hours" DisplayName="Blueberry Profile" ShowInLegend="False" CrosshairLabelPattern="At {A:0.0} °C  life remaining is {V} hours">
+                        <dxc:BarSideBySideSeries2D.Model>
+                            <dxc:SimpleBar2DModel/>
+                        </dxc:BarSideBySideSeries2D.Model>
+                    </dxc:BarSideBySideSeries2D>
+                    <dxc:SplineSeries2D DataSource="{Binding Source={StaticResource points}, XPath=Point}" ArgumentDataMember="Temperature" ValueDataMember="Hours" DisplayName="BlueberryY Profile" ShowInLegend="False" CrosshairLabelVisibility="False" CrosshairEnabled="False"/>
+                </dxc:XYDiagram2D.Series>
+                
+            </dxc:XYDiagram2D>
+        </dxc:ChartControl>
+
+    </Grid>
+</Window>
+
